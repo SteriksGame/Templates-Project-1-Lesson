@@ -1,9 +1,23 @@
-﻿using UnityEngine;
-
-public class GameModeSwitcher : MonoBehaviour
+﻿using System;
+public class GameModeSwitcher : IDisposable
 {
-    [SerializeField] private GameController _gameController;
-    [SerializeField] private GameplayHUD _gameplayHUD;
+    private GameController _gameController;
+    private GameplayHUD _gameplayHUD;
+
+    public GameModeSwitcher(GameController gameController, GameplayHUD gameplayHUD)
+    {
+        _gameController = gameController;
+        _gameplayHUD = gameplayHUD;
+
+        _gameplayHUD.StartedAllBallGameButton += SetAllBallGame;
+        _gameplayHUD.StartedOnlyOneColorBallGameButton += SetOnlyOneColorBallGame;
+    }
+
+    public void Dispose()
+    {
+        _gameplayHUD.StartedAllBallGameButton -= SetAllBallGame;
+        _gameplayHUD.StartedOnlyOneColorBallGameButton -= SetOnlyOneColorBallGame;
+    }
 
     public void SetAllBallGame()
     {
@@ -13,11 +27,5 @@ public class GameModeSwitcher : MonoBehaviour
     public void SetOnlyOneColorBallGame()
     {
         _gameController.SetGameModeAndPlay(new OnlyOneColorBallGameMode());
-    }
-
-    private void Start()
-    {    
-        _gameplayHUD.StartedAllBallGameButton += SetAllBallGame;
-        _gameplayHUD.StartedOnlyOneColorBallGameButton += SetOnlyOneColorBallGame;
     }
 }

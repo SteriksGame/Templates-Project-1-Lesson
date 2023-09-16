@@ -1,37 +1,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController
 {
-    [SerializeField] private BallGenerator _ballGenerator;
-    [SerializeField] private GameplayHUD _gameplayHUD;
+    private BallGenerator _ballGenerator;
+    private GameplayHUD _gameplayHUD;
 
     private List<Ball> _ballsInGame;
-    private GameMode _gameMode;
-    private bool _inPlay = false;
+    private IGameMode _gameMode;
 
-    public bool InPlay => _inPlay;
+    private MiniGameInputController _miniGameInputController;
 
-    public void SetGameModeAndPlay(GameMode gameMode)
+    public GameController(MiniGameInputController miniGameInputController, BallGenerator ballGenerator, GameplayHUD gameplayHUD)
+    {
+        _miniGameInputController = miniGameInputController;
+        _ballGenerator = ballGenerator;
+        _gameplayHUD = gameplayHUD;
+    }
+
+    public void SetGameModeAndPlay(IGameMode gameMode)
     {
         _gameMode = gameMode;
 
         _ballsInGame = _ballGenerator.Generate();
 
         foreach (Ball ball in _ballsInGame)
-            ball.DestroyedBall += ChangeBallInGame;
+            ball.DestroyedBall += OnBallDestroyed;
 
-        _inPlay = true;
+        _miniGameInputController.IsActiv = true;
     }
 
-    private void ChangeBallInGame(Ball ball)
+    private void OnBallDestroyed(Ball ball)
     {
+        ball.DestroyedBall -= OnBallDestroyed;
         _ballsInGame.Remove(ball);
 
-        if (_gameMode.CheckWinGame(_ballsInGame))
+        if (_gameMode.IsWin(_ballsInGame))
         {
             _gameplayHUD.SetActiveResultMenu(true);
-            _inPlay = false;
+            _miniGameInputController.IsActiv = false;
         }
     }
 }

@@ -3,18 +3,31 @@ using UnityEngine;
 public class Picker : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private GameController _gameController;
 
     private MiniGameInputController _miniGameInputController;
+
+    private bool _isInit = false;
 
     public void Initialized(MiniGameInputController miniGameInputController)
     {
         _miniGameInputController = miniGameInputController;
+
+        _isInit = true;
+
+        OnEnable();
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        if (!_isInit)
+            return;
+
         _miniGameInputController.PressedMouse += TakeBall;
+    }
+
+    private void OnDisable()
+    {
+        _miniGameInputController.PressedMouse -= TakeBall;
     }
 
     private void Update()
@@ -24,8 +37,6 @@ public class Picker : MonoBehaviour
 
     private void TakeBall()
     {
-        if (!_gameController.InPlay) return;
-
         RaycastHit hit;
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GameMode
+public interface IGameMode
 {
-    public virtual bool CheckWinGame(IEnumerable<Ball> balls) { return false; }
+    bool IsWin(IEnumerable<Ball> balls);
 }

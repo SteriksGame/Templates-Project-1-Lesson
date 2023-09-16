@@ -2622,7 +2622,6 @@ MonoBehaviour:
   OneTapAmmoGun: {fileID: 2101455395}
   OneTapGun: {fileID: 1600289839}
   TriplTapAmmoGun: {fileID: 5663077729219067864}
-  _shooter: {fileID: 2001432005}
 --- !u!4 &1211546597
 Transform:
   m_ObjectHideFlags: 0
@@ -3053,7 +3052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 2001432003}
-  _shooter: {fileID: 2001432005}
   _gunSwitcher: {fileID: 1211546596}
   _traderSwitcher: {fileID: 1007976920}
 --- !u!4 &1407895194
@@ -4326,7 +4324,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2001432001}
   - component: {fileID: 2001432003}
-  - component: {fileID: 2001432005}
   - component: {fileID: 2001432002}
   - component: {fileID: 2001432004}
   m_Layer: 0
@@ -4419,18 +4416,6 @@ CapsuleCollider:
   m_Height: 0.81
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2001432005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001432000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe4f030d5a9399f4299b110b1432d418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2101455393
 PrefabInstance:
   m_ObjectHideFlags: 0

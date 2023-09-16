@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class OnlyOneColorBallGameMode : GameMode
+public class OnlyOneColorBallGameMode : IGameMode
 {
-    public override bool CheckWinGame(IEnumerable<Ball> balls)
+    public bool IsWin(IEnumerable<Ball> balls)
     {
         int countBallGreen = balls.Where(balls => balls.TypeColor == Ball.TypesColor.Green).Count();
         int countBallRed = balls.Where(balls => balls.TypeColor == Ball.TypesColor.Red).Count();

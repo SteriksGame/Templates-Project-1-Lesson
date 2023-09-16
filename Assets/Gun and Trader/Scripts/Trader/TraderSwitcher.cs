@@ -10,18 +10,35 @@ public class TraderSwitcher : MonoBehaviour
 
     private InputController _inputController;
 
+    private bool _isInit = false;
+
     public void Initializate(InputController inputController)
     {
         _inputController = inputController;
+
+        _isInit = true;
+
+        OnEnable();
     }
 
     private void Start()
     {
-        _inputController.PressedAction += ChangeShop;
-
-        _trader.EnteredCollider += CheckingFireAtTheTrader;
-
         _trader.SetShop(new ArmorShopTrader(_armorShopPanel));
+    }
+
+    private void OnEnable()
+    {
+        if (!_isInit)
+            return;
+
+        _inputController.PressedAction += ChangeShop;
+        _trader.EnteredCollider += CheckingFireAtTheTrader;
+    }
+
+    private void OnDisable()
+    {
+        _inputController.PressedAction -= ChangeShop;
+        _trader.EnteredCollider -= CheckingFireAtTheTrader;
     }
 
     private void CheckingFireAtTheTrader(Collider other)

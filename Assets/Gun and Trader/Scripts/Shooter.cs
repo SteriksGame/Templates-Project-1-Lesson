@@ -1,14 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
 
-public class Shooter : MonoBehaviour
+public class Shooter : IDisposable
 {
     private Gun _currentGun;
 
     private InputController _inputPlayerController;
 
-    public void Initializate(InputController inputPlayerController)
+    public Shooter(InputController inputPlayerController)
     {
         _inputPlayerController = inputPlayerController;
+
+        _inputPlayerController.PressedMouse += Fire;
+    }
+
+    public void Dispose()
+    {
+        _inputPlayerController.PressedMouse -= Fire;
     }
 
     public void SetGun(Gun gun)
@@ -16,11 +23,6 @@ public class Shooter : MonoBehaviour
         _currentGun?.gameObject.SetActive(false);
         _currentGun = gun;
         _currentGun.gameObject.SetActive(true);
-    }
-
-    private void Start()
-    {
-        _inputPlayerController.PressedMouse += Fire;
     }
 
     private void Fire()

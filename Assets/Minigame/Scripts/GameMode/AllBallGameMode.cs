@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-public class AllBallGameMode : GameMode
+public class AllBallGameMode : IGameMode
 {
-    public override bool CheckWinGame(IEnumerable<Ball> balls)
+    public bool IsWin(IEnumerable<Ball> balls)
     {
         if (balls.LongCount() == 0)
             return true;
